@@ -1,3 +1,4 @@
+
 # Habit Tracker App
 
 A comprehensive Flutter application for tracking habits, visualizing progress, and staying motivated with inspirational quotes. Built with Firebase integration for authentication and data persistence.
@@ -172,20 +173,19 @@ flutter build web --release
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- Flutter team for the amazing framework
-- Firebase for backend services
-- The Flutter community for inspiration and support
-
-## 📞 Support
-
-If you have any questions or need help, please open an issue on GitHub.
-
----
-
-**Made with ❤️ using Flutter and Firebase**
+## ScreenShots
+<img width="900" height="1003" alt="Screenshot 2025-09-03 144941" src="https://github.com/user-attachments/assets/2d1f499f-a134-43bb-a83d-92311d1e3987" />
+<img width="902" height="1004" alt="Screenshot 2025-09-03 144730" src="https://github.com/user-attachments/assets/2267226a-25cb-45c4-9f19-a974b9f85ef0" />
+<img width="902" height="1009" alt="Screenshot 2025-09-03 144716" src="https://github.com/user-attachments/assets/364644c7-0fee-43ff-86c2-83dca3952f30" />
+<img width="905" height="1006" alt="Screenshot 2025-09-03 144703" src="https://github.com/user-attachments/assets/226f82da-874b-487a-a51f-d021b35e3542" />
+<img width="897" height="1005" alt="Screenshot 2025-09-03 144652" src="https://github.com/user-attachments/assets/7dcae574-e69a-451a-8fd4-516a7a65fb7d" />
+<img width="901" height="1002" alt="Screenshot 2025-09-03 144621" src="https://github.com/user-attachments/assets/16ad807b-6460-4e62-891e-bf5fa97a0e8e" />
+<img width="900" height="1002" alt="Screenshot 2025-09-03 144609" src="https://github.com/user-attachments/assets/69fed307-fc55-42b5-bab4-72d41d563564" />
+<img width="900" height="1005" alt="Screenshot 2025-09-03 144530" src="https://github.com/user-attachments/assets/0b013275-bfc8-4d81-a480-ee5c47cbcb1d" />
+<img width="904" height="1001" alt="Screenshot 2025-09-03 144457" src="https://github.com/user-attachments/assets/45638653-b29c-4b67-8f65-6943023dc914" />
+<img width="914" height="1004" alt="Screenshot 2025-09-03 144434" src="https://github.com/user-attachments/assets/318486e8-b092-4322-8a51-d69120e63d58" />
+<img width="905" height="1001" alt="Screenshot 2025-09-03 144417" src="https://github.com/user-attachments/assets/115aa456-7058-4adc-8dd8-cdcf7a415eb9" />
+<img width="911" height="999" alt="Screenshot 2025-09-03 144321" src="https://github.com/user-attachments/assets/9416dfb7-791e-46c3-b7b3-0bd2f062b971" />
+<img width="906" height="1005" alt="Screenshot 2025-09-03 144305" src="https://github.com/user-attachments/assets/ffab4a13-71cc-4354-bddb-2dd677cd9905" />
+<img width="907" height="1003" alt="Screenshot 2025-09-03 144219" src="https://github.com/user-attachments/assets/632ab221-5f4b-4538-a56e-5a3df521426c" />
+<img width="1906" height="789" alt="Screenshot 2025-09-03 142812" src="https://github.com/user-attachments/assets/efa8bafa-56fd-4146-a3a7-abf3d45a9e19" />
