@@ -4,6 +4,7 @@ import '../../providers/auth_provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../utils/theme.dart';
 import '../profile/edit_profile_screen.dart';
+import '../auth/login_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -468,9 +469,17 @@ class ProfileScreen extends StatelessWidget {
             child: Text('Cancel', style: TextStyle(color: AppTheme.textSecondary)),
           ),
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               Navigator.of(context).pop();
-              Provider.of<AuthProvider>(context, listen: false).logout();
+              await Provider.of<AuthProvider>(context, listen: false).logout();
+              
+              // Navigate to login screen after logout
+              if (context.mounted) {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (_) => const LoginScreen()),
+                  (route) => false,
+                );
+              }
             },
             child: Text('Logout', style: TextStyle(color: AppTheme.errorColor)),
           ),
