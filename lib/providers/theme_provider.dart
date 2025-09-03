@@ -7,7 +7,7 @@ class ThemeProvider extends ChangeNotifier {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   
-  ThemeMode _themeMode = ThemeMode.system;
+  ThemeMode _themeMode = ThemeMode.light; // Default to light mode
   bool _isLoading = false;
 
   ThemeMode get themeMode => _themeMode;
@@ -20,6 +20,9 @@ class ThemeProvider extends ChangeNotifier {
 
   Future<void> _loadThemePreference() async {
     try {
+      _isLoading = true;
+      notifyListeners();
+
       final prefs = await SharedPreferences.getInstance();
       final themeString = prefs.getString('themeMode');
       
@@ -31,10 +34,16 @@ class ThemeProvider extends ChangeNotifier {
           case 'dark':
             _themeMode = ThemeMode.dark;
             break;
-          default:
+          case 'system':
             _themeMode = ThemeMode.system;
+            break;
+          default:
+            _themeMode = ThemeMode.light; // Default to light mode
         }
-        notifyListeners();
+      } else {
+        // If no saved preference, default to light mode
+        _themeMode = ThemeMode.light;
+        await prefs.setString('themeMode', 'light');
       }
 
       // Sync with Firebase if user is logged in
@@ -42,8 +51,14 @@ class ThemeProvider extends ChangeNotifier {
       if (user != null) {
         await _syncThemeWithFirebase();
       }
+
+      _isLoading = false;
+      notifyListeners();
     } catch (e) {
-      // Ignore errors for theme loading
+      // If there's an error, default to light mode
+      _themeMode = ThemeMode.light;
+      _isLoading = false;
+      notifyListeners();
     }
   }
 
@@ -71,38 +86,49 @@ class ThemeProvider extends ChangeNotifier {
             case 'dark':
               _themeMode = ThemeMode.dark;
               break;
-            default:
+            case 'system':
               _themeMode = ThemeMode.system;
+              break;
+            default:
+              _themeMode = ThemeMode.light;
           }
           notifyListeners();
         }
       }
     } catch (e) {
-      // Ignore Firebase sync errors
+      // Ignore Firebase sync errors, keep local preference
     }
   }
 
   Future<void> setThemeMode(ThemeMode mode) async {
+    if (_themeMode == mode) return; // No change needed
+    
     _themeMode = mode;
     notifyListeners();
 
-    // Save to local storage
-    final prefs = await SharedPreferences.getInstance();
-    String themeString;
-    switch (mode) {
-      case ThemeMode.light:
-        themeString = 'light';
-        break;
-      case ThemeMode.dark:
-        themeString = 'dark';
-        break;
-      default:
-        themeString = 'system';
-    }
-    await prefs.setString('themeMode', themeString);
+    try {
+      // Save to local storage
+      final prefs = await SharedPreferences.getInstance();
+      String themeString;
+      switch (mode) {
+        case ThemeMode.light:
+          themeString = 'light';
+          break;
+        case ThemeMode.dark:
+          themeString = 'dark';
+          break;
+        case ThemeMode.system:
+          themeString = 'system';
+          break;
+      }
+      await prefs.setString('themeMode', themeString);
 
-    // Sync with Firebase
-    await _saveThemeToFirebase(themeString);
+      // Sync with Firebase
+      await _saveThemeToFirebase(themeString);
+    } catch (e) {
+      // If saving fails, still update the UI but log the error
+      print('Error saving theme preference: $e');
+    }
   }
 
   Future<void> _saveThemeToFirebase(String themeString) async {
@@ -120,7 +146,8 @@ class ThemeProvider extends ChangeNotifier {
         'updatedAt': DateTime.now().toIso8601String(),
       });
     } catch (e) {
-      // Ignore Firebase save errors
+      // Ignore Firebase save errors, local storage is sufficient
+      print('Error saving theme to Firebase: $e');
     }
   }
 
@@ -129,5 +156,18 @@ class ThemeProvider extends ChangeNotifier {
         ? ThemeMode.dark 
         : ThemeMode.light;
     await setThemeMode(newMode);
+  }
+
+  // Method to set specific theme modes
+  Future<void> setLightMode() async {
+    await setThemeMode(ThemeMode.light);
+  }
+
+  Future<void> setDarkMode() async {
+    await setThemeMode(ThemeMode.dark);
+  }
+
+  Future<void> setSystemMode() async {
+    await setThemeMode(ThemeMode.system);
   }
 }
